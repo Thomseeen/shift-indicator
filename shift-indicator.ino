@@ -89,21 +89,22 @@ void loop() {
   // RPM-LEDs
   if (rpmdata == 1) {
     rpm_percentage = rpm / (float)rpmmax;
+    leds_per_range = (int)(coutof(rpm_ranges) / Strip_Cells);
     if (rpm_percentage < 0.98) {
       FLASH = 0;
       for (int i = 0; i < countof(rpm_ranges); i++) {
         if (rpm_percentage >= rpm_ranges[i]) {
-          RPM_LEDs.setPixelColor(i * 2, 255, colorG[i], 0);
+          RPM_LEDs.setPixelColor(i * leds_per_range, RPM_LEDs.Color(255, colorG[i], 0));
         } else {
-          RPM_LEDs.setPixelColor(i * 2, 0, 0, 0);
+          RPM_LEDs.setPixelColor(i * leds_per_range, RPM_LEDs.Color(0, 0, 0));
         }
       }
       RPM_LEDs.show();
       for (int i = 0; i < countof(rpm_ranges); i++) {
         if (rpm_percentage >= rpm_ranges[i]) {
-          RPM_LEDs.setPixelColor(i * 2 + 1, RPM_LEDs.Color(255, colorG[i], 0));
+          RPM_LEDs.setPixelColor(i * leds_per_range + 1, RPM_LEDs.Color(255, colorG[i], 0));
         } else {
-          RPM_LEDs.setPixelColor(i * 2 + 1, RPM_LEDs.Color(0, 0, 0));
+          RPM_LEDs.setPixelColor(i * leds_per_range + 1, RPM_LEDs.Color(0, 0, 0));
         }
       }
       RPM_LEDs.show();
