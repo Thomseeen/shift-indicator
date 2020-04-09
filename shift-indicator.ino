@@ -14,8 +14,9 @@ const int Strip_Pin = 10, Strip_Cells = 8, brightness = 15;
 Adafruit_NeoPixel RPM_LEDs(Strip_Cells, Strip_Pin, NEO_GRB + NEO_KHZ800);
 
 const int Seg7[] = {6, 5, 4, 3, 2, 7, 8};
-const int colorG[] = {200, 120, 40, 0};
-const float rpm_ranges[] = {0.60, 0.70, 0.80, 0.90};
+const int colorG[] = {200, 175, 150, 125, 100, 75, 50, 25};
+const float rpm_ranges[] = {0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.90, 0.95};
+const float blink_threshold = 0.98;
 const unsigned long blink_time = 75;
 
 float rpm_percentage = 0;
@@ -89,8 +90,8 @@ void loop() {
   // RPM-LEDs
   if (rpmdata == 1) {
     rpm_percentage = rpm / (float)rpmmax;
-    int leds_per_range = (int)(countof(rpm_ranges) / Strip_Cells);
-    if (rpm_percentage < 0.98) {
+    int leds_per_range = (int)(Strip_Cells / countof(rpm_ranges));
+    if (rpm_percentage < blink_threshold) {
       FLASH = 0;
       for (int i = 0; i < countof(rpm_ranges); i++) {
         if (rpm_percentage >= rpm_ranges[i]) {
