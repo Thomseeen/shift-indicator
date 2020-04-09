@@ -1,0 +1,5 @@
+{
+    "sketch": "shift-indicator.ino",
+    "board": "arduino:avr:nano",
+    "configuration": "cpu=atmega328"
+}
