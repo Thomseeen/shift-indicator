@@ -89,7 +89,7 @@ void loop() {
   // RPM-LEDs
   if (rpmdata == 1) {
     rpm_percentage = rpm / (float)rpmmax;
-    leds_per_range = (int)(coutof(rpm_ranges) / Strip_Cells);
+    int leds_per_range = (int)(coutof(rpm_ranges) / Strip_Cells);
     if (rpm_percentage < 0.98) {
       FLASH = 0;
       for (int i = 0; i < countof(rpm_ranges); i++) {
